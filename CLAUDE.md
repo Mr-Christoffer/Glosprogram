@@ -63,6 +63,9 @@ Arbetet ska ske med Claude Opus 5.5 (`claude-opus-5-5`) i Claude Code. Fråga om
 ## Arbetssätt
 - Ändringar görs stegvis, ett use case i taget (UC1, UC2 …), och varje use case blir en egen commit.
   Alla use cases finns i `specs/`, med en översikt och status i `specs/README.md`.
+- Varje prompt läggs automatiskt till i `prompt_history.md` av en hook (`.claude/hooks/log_prompt.py`).
+  När svaret är klart ersätter Claude raden `**Resultat:** _(fylls i av Claude)_` under den senaste prompten
+  med en kort sammanfattning av vad som gjordes.
 - Buggar som upptäcks rapporteras i `bugs/`, en fil per bugg (`BUGn-kort-beskrivning.md`), och listas i `bugs/README.md`.
 - Varje use case har acceptanskriterier som testas genom att köra programmet (`dotnet run`) innan nästa steg påbörjas.
 - Leverera inte hela lösningen på en gång. Guida fram den och visa korta, kommenterade kodexempel.

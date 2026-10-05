@@ -49,43 +49,102 @@ string[] lines = File.ReadAllLines(chosenFile);
 // UC2: Rubriken (lines[0]) talar om vilka språk filen innehåller, t.ex. ["swedish", "english"].
 string[] languages = lines[0].Split(",");
 
+// UC7: Låt användaren välja översättningsriktning. Samma valideringsmönster som menyn i UC4.
+Console.WriteLine("Översättningsriktningar:");
+Console.WriteLine($"1. {languages[0]} -> {languages[1]}");
+Console.WriteLine($"2. {languages[1]} -> {languages[0]}");
+int direction;
+while (true)
+{
+    Console.WriteLine("Välj riktning (1-2):");
+    string? input = Console.ReadLine();
+
+    if (input == null)
+    {
+        return;
+    }
+
+    if (int.TryParse(input, out direction) && (direction == 1 || direction == 2))
+    {
+        break;
+    }
+
+    Console.WriteLine("Ogiltigt val, försök igen.");
+}
+
+// UC7: true om användaren valde det omvända hållet, t.ex. english -> swedish.
+bool reversed = direction == 2;
+
 // UC1: Skip(1) hoppar över första raden (rubriken "swedish,english") så att den inte blir ett ord.
 foreach (string line in lines.Skip(1))
 {
     string[] wordPair = line.Split(","); // Tuplets
     // UC2: Språken hämtas från rubriken istället för att vara hårdkodade som "swedish" och "english".
-    words.Add(new Word(wordPair[0], wordPair[1], languages[0], languages[1]));
+    // UC7: Vid omvänd riktning byter ord och språk plats, så att WordIn alltid är det ord användaren skriver.
+    if (reversed)
+    {
+        words.Add(new Word(wordPair[1], wordPair[0], languages[1], languages[0]));
+    }
+    else
+    {
+        words.Add(new Word(wordPair[0], wordPair[1], languages[0], languages[1]));
+    }
 }
 
-// Referera till ett ord ur vår array (hem på engelska):
-//System.Console.WriteLine(words[1].WordOut);
+// UC7: Språket som användaren skriver på. "villkor ? om sant : om falskt" är en kort if/else som ger ett värde.
+string languageIn = reversed ? languages[1] : languages[0];
 
-// Dictionary
-Dictionary<string, List<Word>> swedishToEnglish = words
-.GroupBy(Word => Word.WordIn, StringComparer.OrdinalIgnoreCase).
-ToDictionary(
-    word => word.Key, // Nyckel
-    word => word.ToList(),        // Värde, typiskt hela objektet (referensen)
-    StringComparer.OrdinalIgnoreCase
-);
+// UC5: Neutralt namn istället för swedishToEnglish, eftersom språken bestäms av filen och riktningen.
+// UC5: Lambda-parametrar med liten bokstav och punkten först på varje rad i LINQ-kedjan.
+// UC7: Synonymer fungerar åt båda hållen, eftersom GroupBy samlar alla Word med samma WordIn,
+// t.ex. "angry" -> [arg, ilsken] när riktningen är omvänd.
+Dictionary<string, List<Word>> translations = words
+    .GroupBy(word => word.WordIn, StringComparer.OrdinalIgnoreCase)
+    .ToDictionary(
+        group => group.Key, // Nyckel
+        group => group.ToList(), // Värde, typiskt hela objektet (referensen)
+        StringComparer.OrdinalIgnoreCase
+    );
+
+// UC6: Berätta hur man avslutar.
+Console.WriteLine("Skriv q för att avsluta.");
 while (true)
 {
-    System.Console.WriteLine("Ange vilket ord du vill översätta");
+    // UC5: Ledtexten visar vilket språk ordet ska skrivas på.
+    Console.WriteLine($"Ange ett ord på {languageIn}:");
     string? wordToTranslate = Console.ReadLine();
 
-    if (swedishToEnglish.ContainsKey(wordToTranslate!))
+    // UC6: null (Ctrl+Z) eller "q" avslutar loopen istället för att krascha.
+    if (wordToTranslate == null || wordToTranslate.Equals("q", StringComparison.OrdinalIgnoreCase))
     {
-        foreach (var word in swedishToEnglish[wordToTranslate])
+        break;
+    }
+
+    // UC6: En tom rad frågar bara igen. continue hoppar direkt till nästa varv i loopen.
+    if (string.IsNullOrWhiteSpace(wordToTranslate))
+    {
+        continue;
+    }
+
+    // UC6: TryGetValue kontrollerar och hämtar i ett steg. Kompilatorn vet redan att
+    // wordToTranslate inte är null här (kontrollen ovan), så ! behövs inte längre.
+    if (translations.TryGetValue(wordToTranslate, out List<Word>? matches))
+    {
+        foreach (Word word in matches)
         {
-            System.Console.WriteLine(word.WordOut);
+            // UC5: Console istället för System.Console (System följer med via ImplicitUsings).
+            Console.WriteLine(word.WordOut);
         }
     }
     else
     {
-        System.Console.WriteLine("This word does not exist in this dictionary");
+        // UC5: Felmeddelandet på svenska, som resten av programmet.
+        Console.WriteLine("Ordet finns inte i ordlistan.");
     }
-
 }
+
+// UC6: Hit kommer programmet när loopen avslutas med break.
+Console.WriteLine("Hej då!");
 
 
 

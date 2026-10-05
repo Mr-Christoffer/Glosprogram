@@ -9,8 +9,8 @@ Ta ett use case i taget, i ordning. Testa acceptanskriterierna med `dotnet run`,
 | [UC2](UC2-sprak-fran-fil.md) | Språken läses från filen | ✅ |
 | [UC3](UC3-hitta-ordlistor.md) | Hitta tillgängliga ordlistor | ✅ |
 | [UC4](UC4-valja-ordlista.md) | Välja ordlista | ✅ |
-| [UC5](UC5-generiska-namn.md) | Generiska namn och texter | ⬜ |
-| [UC6](UC6-saker-inmatning.md) | Säker inmatning och avslut | ⬜ |
-| [UC7](UC7-bada-hallen.md) | Översätta åt båda hållen | ⬜ |
+| [UC5](UC5-generiska-namn.md) | Generiska namn och texter | ✅ |
+| [UC6](UC6-saker-inmatning.md) | Säker inmatning och avslut | ✅ |
+| [UC7](UC7-bada-hallen.md) | Översätta åt båda hållen | ✅ |
 | [UC8](UC8-trasiga-filer.md) | Tåla trasiga filer | ⬜ |
 | [UC9](UC9-metod-for-inlasning.md) | (bonus) Läsa in ordlistan i en metod | ⬜ |
