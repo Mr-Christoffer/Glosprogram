@@ -11,24 +11,47 @@ List<Word> words = [
     new Word("hus", "house", "swedish", "english"),
     new Word("hem", "home", "swedish", "english"),
     new Word("stor", "big", "swedish", "english"),
-    // new Word("stor", "large", "swedish", "english")
+    new Word("stor", "large", "swedish", "english"),
+    new Word("stor", "huge", "swedish", "english"),
+    new Word("stor", "massive", "swedish", "english")
     ];
 
 // Referera till ett ord ur vår array (hem på engelska):
-System.Console.WriteLine(words[1].WordOut);
+//System.Console.WriteLine(words[1].WordOut);
 
 // Dictionary
-Dictionary<string, Word> swedishToEnglish = words.ToDictionary(
-    word => word.WordIn, // Nyckel
-    word => word // Värde
+Dictionary<string, List<Word>> swedishToEnglish = words
+.GroupBy(Word => Word.WordIn, StringComparer.OrdinalIgnoreCase).
+ToDictionary(
+    word => word.Key, // Nyckel
+    word => word.ToList(),        // Värde, typiskt hela objektet (referensen)
+    StringComparer.OrdinalIgnoreCase
 );
-// Referera till ett ord ur vår dictionary
-System.Console.WriteLine(swedishToEnglish["hem"].WordOut);
+while (true)
+{
+    System.Console.WriteLine("Ange vilket ord du vill översätta");
+    string? wordToTranslate = Console.ReadLine();
+
+    if (swedishToEnglish.ContainsKey(wordToTranslate!))
+    {
+        foreach (var word in swedishToEnglish[wordToTranslate])
+        {
+            System.Console.WriteLine(word.WordOut);
+        }
+    }
+    else
+    {
+        System.Console.WriteLine("This word does not exist in this dictionary");
+    }
+
+}
+
+
 class Word(string wordIn, string wordOut, string languageIn, string languageOut)
 {
-    public string WordIn{get; } = wordIn;
-    public string WordOut{get; } = wordOut;
-    public string LanguageIn{get; } = languageIn;
-    public string LanguageOut{get; } = languageOut;
+    public string WordIn { get; } = wordIn;
+    public string WordOut { get; } = wordOut;
+    public string LanguageIn { get; } = languageIn;
+    public string LanguageOut { get; } = languageOut;
 }
 
