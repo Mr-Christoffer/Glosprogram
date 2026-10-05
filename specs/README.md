@@ -14,3 +14,4 @@ Ta ett use case i taget, i ordning. Testa acceptanskriterierna med `dotnet run`,
 | [UC7](UC7-bada-hallen.md) | Översätta åt båda hållen | ✅ |
 | [UC8](UC8-trasiga-filer.md) | Tåla trasiga filer | ⬜ |
 | [UC9](UC9-metod-for-inlasning.md) | (bonus) Läsa in ordlistan i en metod | ⬜ |
+| [UC10](UC10-engelska-spanska.md) | Översätta mellan engelska och spanska | ⬜ |

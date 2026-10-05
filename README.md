@@ -80,7 +80,7 @@ stor,large
 ```
 
 - Första raden är en rubrik med språkens namn. Den läses inte in som ett ord.
-- Varje rad efter rubriken innehåller ett ordpar: ordet att översätta, ett kommatecken och översättningen.
+- Varje rad efter rubriken innehåller ett ordpar: ordet på det första språket, ett kommatecken och ordet på det andra språket. Samma rad används för båda översättningsriktningarna.
 - Lägg till fler rader med samma ord för att lägga till synonymer.
 - Skriv inga mellanslag runt kommatecknet.
 - Spara filen som UTF-8 så att tecken som å, ä, ö och ñ fungerar.
@@ -93,6 +93,6 @@ Den nya ordlistan syns i menyn nästa gång programmet startas. Koden behöver i
 - En rad i en ordlista utan kommatecken får programmet att krascha när ordlistan läses in.
 - En tom ordlista, eller en rubrik utan kommatecken (t.ex. bara `swedish`), får programmet att krascha när ordlistan väljs.
 - Om mappen `wordlists/` saknas kraschar programmet vid start. Om mappen är tom går det inte att göra något giltigt val.
-- Ordet `q` går inte att översätta, eftersom det avslutar programmet.
+- Ordet `q` (eller `Q`) går inte att översätta, eftersom det avslutar programmet.
 
 Planerade förbättringar finns beskrivna som use cases i [specs/](specs/README.md). Kända buggar finns i [bugs/](bugs/README.md).

@@ -99,3 +99,13 @@ Prompterna är återgivna ordagrant. Under varje prompt står kort vad som blev 
 > kör uc5-uc7
 
 **Resultat:** UC5–UC7 implementerades och testades. UC5: neutrala namn, ledtext med språk, svenska texter och kodstil enligt CLAUDE.md. UC6: `q` och Ctrl+Z avslutar, tom rad frågar igen, `TryGetValue` istället för `!`. UC7: val av översättningsriktning, och synonymer fungerar åt båda hållen. Hooken rensar nu bort VS Code-taggar som `<ide_opened_file>`. README och specs uppdaterades.
+
+### 20
+> är readme uppdaterad
+
+**Resultat:** README kontrollerades mot programmet och stämde i stort. Två formuleringar rättades: ordparens kolumner beskrivs nu som första/andra språket (inte "ordet att översätta"), eftersom riktningen kan väljas, och `q` gäller även `Q`.
+
+### 21
+> kan du skapa en UC10 där man också kan översätta mellan engelska och spanska
+
+**Resultat:** `specs/UC10-engelska-spanska.md` skapades med två lösningsalternativ: A, en ny ordlistefil, och B, att kombinera listor via svenska (rekommenderas). Kriterierna kontrollerades mot ordlistorna: 116 par, inga dubbletter. UC10 lades till i `specs/README.md`. Inget implementerades.
