@@ -9,7 +9,7 @@ Arbetet ska ske med Claude Opus 5.5 (`claude-opus-5-5`) i Claude Code. Fråga om
 
 ## Plattform
 - .NET 10, `ImplicitUsings` och `Nullable` är påslagna (se `Glosprogram.csproj`).
-- Top-level statements i `Program.cs`. Klasser definieras längst ner i filen, efter programflödet.
+- Top-level statements i `Program.cs`. Varje klass ligger i en egen fil med samma namn som klassen, t.ex. `Word.cs`.
 
 ## Namngivning
 - **PascalCase** för klasser och properties: `Word`, `WordIn`, `LanguageOut`.
@@ -63,5 +63,6 @@ Arbetet ska ske med Claude Opus 5.5 (`claude-opus-5-5`) i Claude Code. Fråga om
 ## Arbetssätt
 - Ändringar görs stegvis, ett use case i taget (UC1, UC2 …), och varje use case blir en egen commit.
   Alla use cases finns i `specs/`, med en översikt och status i `specs/README.md`.
+- Buggar som upptäcks rapporteras i `bugs/`, en fil per bugg (`BUGn-kort-beskrivning.md`), och listas i `bugs/README.md`.
 - Varje use case har acceptanskriterier som testas genom att köra programmet (`dotnet run`) innan nästa steg påbörjas.
 - Leverera inte hela lösningen på en gång. Guida fram den och visa korta, kommenterade kodexempel.

@@ -1,8 +1,50 @@
 ﻿Console.WriteLine("Glosprogram");
+
+// UC3: Hämta alla .csv-filer i mappen wordlists. Nya filer hittas automatiskt utan att koden ändras.
+string[] files = Directory.GetFiles("wordlists", "*.csv");
+// UC3: Sortera så att numreringen blir densamma varje gång (ordningen från GetFiles är inte garanterad).
+Array.Sort(files);
+
+Console.WriteLine("Tillgängliga ordlistor:");
+// UC3: for istället för foreach, eftersom vi behöver indexet i för att numrera listan.
+for (int i = 0; i < files.Length; i++)
+{
+    // UC3: i + 1 så att listan börjar på 1 för användaren (arrayer börjar på 0).
+    // GetFileNameWithoutExtension gör om "wordlists\swedish-english.csv" till "swedish-english".
+    Console.WriteLine($"{i + 1}. {Path.GetFileNameWithoutExtension(files[i])}");
+}
+
+// UC4: Fråga tills användaren har skrivit ett giltigt nummer. while (true) + break avslutar loopen först när valet är okej.
+int choice;
+while (true)
+{
+    Console.WriteLine($"Välj ordlista (1-{files.Length}):");
+    string? input = Console.ReadLine();
+
+    // UC4: null betyder att inmatningen tog slut (Ctrl+Z). Utan den här kontrollen skulle loopen fråga i all oändlighet.
+    if (input == null)
+    {
+        return;
+    }
+
+    // UC4: TryParse returnerar false istället för att krascha om texten inte är ett tal (t.ex. "abc").
+    // Sedan kontrolleras att talet finns i listan, så att t.ex. 0 eller 99 inte godkänns.
+    if (int.TryParse(input, out choice) && choice >= 1 && choice <= files.Length)
+    {
+        break;
+    }
+
+    Console.WriteLine("Ogiltigt val, försök igen.");
+}
+
+// UC4: choice - 1 eftersom listan som visas börjar på 1 men arrayen börjar på 0.
+string chosenFile = files[choice - 1];
+
 List<Word> words = [];
 // fyll listan med ord från fil
 // UC1: Läs in alla rader till en variabel först, så att vi kan välja vilka rader som ska användas.
-string[] lines = File.ReadAllLines("wordlists/swedish-english.csv");
+// UC4: Läs den valda filen istället för det hårdkodade filnamnet.
+string[] lines = File.ReadAllLines(chosenFile);
 
 // UC2: Rubriken (lines[0]) talar om vilka språk filen innehåller, t.ex. ["swedish", "english"].
 string[] languages = lines[0].Split(",");
