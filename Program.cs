@@ -1,20 +1,19 @@
 ﻿Console.WriteLine("Glosprogram");
-/*
-List<string> words =
-[
-    "hus", "house", // jämna index = svenskt upplag, udda är engelska
-    "hem", "home",
-    "stor", "big", // synonymer får hanteras i en loop
-    "stor", "large",
-]; */
-List<Word> words = [
-    new Word("hus", "house", "swedish", "english"),
-    new Word("hem", "home", "swedish", "english"),
-    new Word("stor", "big", "swedish", "english"),
-    new Word("stor", "large", "swedish", "english"),
-    new Word("stor", "huge", "swedish", "english"),
-    new Word("stor", "massive", "swedish", "english")
-    ];
+List<Word> words = [];
+// fyll listan med ord från fil
+// UC1: Läs in alla rader till en variabel först, så att vi kan välja vilka rader som ska användas.
+string[] lines = File.ReadAllLines("wordlists/swedish-english.csv");
+
+// UC2: Rubriken (lines[0]) talar om vilka språk filen innehåller, t.ex. ["swedish", "english"].
+string[] languages = lines[0].Split(",");
+
+// UC1: Skip(1) hoppar över första raden (rubriken "swedish,english") så att den inte blir ett ord.
+foreach (string line in lines.Skip(1))
+{
+    string[] wordPair = line.Split(","); // Tuplets
+    // UC2: Språken hämtas från rubriken istället för att vara hårdkodade som "swedish" och "english".
+    words.Add(new Word(wordPair[0], wordPair[1], languages[0], languages[1]));
+}
 
 // Referera till ett ord ur vår array (hem på engelska):
 //System.Console.WriteLine(words[1].WordOut);
@@ -47,11 +46,4 @@ while (true)
 }
 
 
-class Word(string wordIn, string wordOut, string languageIn, string languageOut)
-{
-    public string WordIn { get; } = wordIn;
-    public string WordOut { get; } = wordOut;
-    public string LanguageIn { get; } = languageIn;
-    public string LanguageOut { get; } = languageOut;
-}
 

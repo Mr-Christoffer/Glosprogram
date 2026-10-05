@@ -1,0 +1,11 @@
+# UC8 – Tåla trasiga filer
+
+**Som** användare **vill jag** att programmet klarar en tom mapp eller felaktiga rader, **så att** det inte kraschar på grund av en dålig fil.
+
+## Acceptanskriterier
+- [ ] Tom eller saknad mapp ger ett tydligt meddelande
+- [ ] Rader med fel antal kolumner hoppas över (gärna med en varning)
+- [ ] Mellanslag runt orden tas bort (`"katt, cat"` fungerar)
+
+## Koncept
+`Directory.Exists`, `.Length`-kontroll, `.Trim()`
